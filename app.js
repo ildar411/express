@@ -6,15 +6,17 @@ var mysql = require('mysql');
 
 
 const app = express();
-var con = mysql.createConnection({
+var con = mysql.createPool({
+	connectionLimit : 100,
 	host : 'localhost',
 	user : 'test',
 	password : '1',
 	database : 'veryfood_pc_cour',
+	debug : true,
 });
-app.use(express.static(__dirname + '/static'));
-//const urlParser = bodyParser.urlencoded({extended : false});
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static( __dirname + '/static'));
+const urlParser = bodyParser.urlencoded({extended : false});
+//app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 /*app.get('/couriers', urlParser, function(request, response){
@@ -22,68 +24,62 @@ app.use(bodyParser.json());
 
 });*/
 
-app.post('/', function(request, response){
-	//if(err) throw console.log('ошибка http');
-	//console.log(`${request.body.id}`.toString());
-	//console.log(`${request.body.name}`.toString());
-	let req = request.body;
-	con.connect(function(err) {
-  			//if (err) throw console.log('шибка подключения');
+app.post('/api', function(request, response){
+		
+	var id = request.body.id;
+	var name = request.body.name;
+	console.log('!!!!!!!!!!!!!!!!!' + id + name);
+	con.getConnection(function(err, conn) {
   			if (err) {
   				response.status(500);
   				response.json({
   					error: err.toString()
   				})
-  				return;
   			}
-  			var values = {id : req.id, name : req.name};
-  			var str_id = req.id;
-  			var str_name = req.name;
-  			var obj = {};
-  			con.query('select id,name from couriers', function(err, rows)
-  				{obj = rows;
-  					con.query('insert into couriers (id, name) values (?, ?)', [req.id, req.name], function(err, data){
-  						if (err) {console.log('ошибка mysql');}
-  						else {console.log('success');};
-  						response.json({
-  							err: err,
-  							data: data,
-  							id : req.id,
-  							name : req.name,
-  							rows : obj
+  			else {
+  					
+	//var id = request.body.id;
+	//var name = request.body.name;
+	console.log('!!!!!!!!!!!!!!!!!' + id + name);
+	
+  			conn.query(mysql.format('insert into couriers (id, name) values (?, ?)', [id, name]), function(err, data){
+  				if (err) {console.log('ошибка mysql');}
+  				else {console.log('success');};
+  				
+  				response.json({
+		  			err: err,
+		  			data: data,
+		  			});
+		  		conn.release();
   				});
-  				//con.end();
-  			});});
-   			/*
-   			con.query("INSERT INTO couriers (id, name ) VALUES (" + str_id + "," + str_name + ")", function (err, data){
-    			if (err) {console.log(err);}
-    			else {console.log('success')};
-  			response.json(data);
-  			con.end();
-  			});
-  			*/
-
-  			
-
-
-	console.log(req.id);
-
-	});
+  		};
+  	});
 });
+app.get('/api', function(request, response){
 
-/*app.get('/couriers', jsonParser, function(request, response){
-	con.connect(function(err) {
-		if(err) throw err;
-		let obj = con.query("select * from couriers",function(err, rows){
-			if (err) throw console.log(err);
-			return rows;});		
-			con.end();
-		response.json(obj);
-			});
-	//response.json(obj);
 
-		
-	});*/
+  		con.getConnection(function(err, conn)
+		{ if(err) {
+			response.status(500);
+			response.json({ error : err.toString()})
+		}
+		else {
+			conn.query('select * from couriers', function(err, rows){
+  				var obj = rows;
+  				conn.release();
+		  		response.json({
+		  			//err: err,
+		  			rows : obj,
+		  		});
+  			}); 
+
+	  		};
+	  	});
+  	});
+
+   			
+
+
 /*app.get('/couriers_transfers', function(request,  response){
 
 });
