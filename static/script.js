@@ -18,8 +18,9 @@ document.getElementById('sub').addEventListener('click', function(event){
 })
 */
 $(document).ready(function(event){
+	event.preventDefault();
 	$.ajax({
-		url : '/api',
+		url : '/couriers',
 		dataType : 'json',
 		method : 'GET',
 		data : {proc : 'going'},
@@ -47,20 +48,17 @@ $(document).ready(function(event){
 
 $('[name=add]').on('submit', function(event){
 	event.preventDefault();
-	var data = {'id': Id, 'name': Name};
+	var id = $('#courierId').val();
+	var name = $('#courierName').val();
+	var data = {id: id, name: name};
 	console.log(data);
 	$.ajax({
 		method : "POST",
-		url : "/api",
-		data : {id : Id,
-			name : Name},
+		url : "/couriers",
+		data : data,
 		dataType : "json",
 		success : function(res){
-			var newLi = document.createElement('li');
-  				newLi.innerHTML = 'id: ' + Id + ' name: ' + Name;
-
-  				list.appendChild(newLi);
-			console.log('success');
+			console.log(res);
 		},
 	/*success: [function(res){
 			var id = res.id;
@@ -80,5 +78,15 @@ $('[name=add]').on('submit', function(event){
 
 
 	});
+	$('[name=add').on('submit', function(event){
+		event.preventDefault();
+		var id = $('#courierId').val();
+		var name = $('#courierName').val();
+		var newLi = document.createElement('li');
+  		newLi.innerHTML = 'id: ' + Id + ' name: ' + Name;
+		list.appendChild(newLi);
+		console.log('success');
+		},
+	})
 });
 	

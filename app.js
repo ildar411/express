@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 
 });*/
 
-app.post('/api', function(request, response){
+app.post('/couriers', function(request, response){
 		
 	var id = request.body.id;
 	var name = request.body.name;
@@ -40,7 +40,7 @@ app.post('/api', function(request, response){
   					
 	//var id = request.body.id;
 	//var name = request.body.name;
-	console.log('!!!!!!!!!!!!!!!!!' + id + name);
+	
 	
   			conn.query(mysql.format('insert into couriers (id, name) values (?, ?)', [id, name]), function(err, data){
   				if (err) {console.log('ошибка mysql');}
@@ -55,7 +55,7 @@ app.post('/api', function(request, response){
   		};
   	});
 });
-app.get('/api', function(request, response){
+app.get('/couriers', function(request, response){
 
 
   		con.getConnection(function(err, conn)
@@ -80,13 +80,13 @@ app.get('/api', function(request, response){
    			
 
 
-/*app.get('/couriers_transfers', function(request,  response){
+app.get('/couriers_transfers', function(request,  response){
 
 });
 
 app.post('/couriers_transfers', function(request, response){
-
-});*/
+	
+});
 app.listen(3000, function(err){
 	if (err) throw console.log(err); 
 	console.log('запуск');
