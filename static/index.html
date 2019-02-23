@@ -3,23 +3,40 @@
 <head>
     <title>Регистрация</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="styleOfIndex.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-    <h1>Введите данные</h1>
-    <form action="/couriers" method="POST" name='add'>
-        <label>Name</label><br>
-        <input type="text" id='courierName' name="courierName" /><br><br>
-        <label>ID</label><br>
-        <input type="number" id='courierId' name="courierId" /><br><br>
-        <input type="submit" id='sub' value="Отправить" />
-    </form>
-    <ul id='list'>
-    </ul>  
-  <!-- <script
-  src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-  integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
-  crossorigin="anonymous"></script>-->
+  <div>
+    <h1 class='data'>Введите данные</h1>
+    <h1 class='couriers'>Курьеры</h1>
+    <div class = 'frm'>
+      <form class='form-group' action="" method="POST" name='add'>
+          <label>Name</label><br>
+          <input class = 'input-group-btn' type="text" id='courierName' name="courierName" /><br><br>
+          <label>ID</label><br>
+          <input class='input-group-btn' type="number" id='courierId' name="courierId" /><br><br>
+          <input class="btn btn-primary" type="submit" id='sub' value="Отправить" />
+      </form>
+    </div>
+    <ul id='list' class='list-group'>
+    </ul>
+    <div/>
+    <div class='search'>
+    <h1>Поиск</h1>
+      <label class='radio-inline'>ФИО</label>
+      <input type='radio' id='fsNameCourier' name='choice' value='fsNameCourier'/>
+      <label class='radio-inline'>ID</label>
+      <input type="radio" id='idCourier' name='choice'
+      value='idCourier'/>  
+    </div>
+    <div class='input-group-btn' id='searchByName'>
+      <input class='searchByName' type='text' id='searchName' placeholder='ФИО'/>
+      <input class="searchById" type='number' id='searchId' placeholder='id'/>
+    </div>
+  
     <script src ="/script.js"></script>
 </body>
 </html>

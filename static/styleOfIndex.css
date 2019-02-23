@@ -1,0 +1,28 @@
+.frm {
+	width: 50%;
+	float: left;
+}
+ul {
+	width: 50%;
+	list-style-type: none;
+
+}
+.data {
+	width: 50%;
+	float: left;
+}
+
+.couriers {
+	width: 50%;
+	float: right;
+}
+.search{
+	width: 100%;
+	vertical-align: bottom;
+}
+.searchByName {
+	display: none;
+}
+.searchById {
+	display: none;
+}
